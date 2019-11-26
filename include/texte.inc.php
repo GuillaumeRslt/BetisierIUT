@@ -37,6 +37,10 @@ case 14:
  	// include ici la page de détail des personne
 	include_once('pages/detailPersonne.inc.php');
 		break;
+case 18:
+	// inclure ici la page permmettant de modifier une personne
+	include_once('pages/modificationPersonne.inc.php');
+		break;
 //
 // Citations
 //

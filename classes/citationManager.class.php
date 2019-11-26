@@ -84,4 +84,14 @@ private $db;
 
     $req->closeCursor();
   }
+
+  public function noterCitation($numCit, $num, $note) {
+
+    $sql = 'INSERT INTO vote (cit_num, per_num, vot_valeur)
+    VALUES(\''.$numCit.'\', \''.$num.'\', \''.$note.'\')';
+
+    $req = $this->db->query($sql);
+
+    $req->closeCursor();
+  }
 }

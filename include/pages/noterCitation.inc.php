@@ -60,7 +60,7 @@
 
 <?php } else {?>
 
-  <?php /*$manager->noterCitation($_SESSION["citNum"]); */ ?>
+  <?php $manager->noterCitation( $_GET["cit_num"], $_SESSION["num"], $_POST["noteCit"]); ?>
 
   <p><img class = "icone" src="image/valid.png" alt="noteCitation"/> Vous avez mis la note de <?php echo $_POST["noteCit"]; ?></p>
 
