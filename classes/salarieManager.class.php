@@ -9,7 +9,7 @@ private $db;
 
   public function getSalarie($num) {
 
-    $sql = 'SELECT per_num, per_nom, per_prenom, per_mail, per_tel, sal_telprof, fon_libelle
+    $sql = 'SELECT p.per_num, per_nom, per_prenom, per_mail, per_tel, sal_telprof, fon_libelle
     FROM personne p
     JOIN salarie s ON p.per_num=s.per_num
     JOIN fonction f ON s.fon_num=f.fon_num
@@ -57,6 +57,16 @@ private $db;
 
     $req->closeCursor();
 
+  }
+
+  public function modifSalarie($num, $telPro, $fonction) {
+
+    $sql = 'UPDATE salarie SET sal_telprof=\''.$telPro.'\', fon_num=\''.$fonction.'\'
+    WHERE per_num='.$num;
+
+    $req = $this->db->query($sql);
+
+    $req->closeCursor();
   }
 
 }

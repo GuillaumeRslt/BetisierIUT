@@ -41,6 +41,16 @@ case 18:
 	// inclure ici la page permmettant de modifier une personne
 	include_once('pages/modificationPersonne.inc.php');
 		break;
+case 19:
+	// inclure ici la page modifiant un salarié
+	include_once('pages/finModifSal.inc.php');
+		break;
+case 20:
+	// inclure ici la page modifiant un étudiant
+	include_once('pages/finModifEtu.inc.php');
+		break;
+
+
 //
 // Citations
 //

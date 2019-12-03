@@ -91,5 +91,27 @@ private $db;
 
   }
 
+  public function modifPersonne($num, $nom, $prenom, $tel, $mail, $login, $mdp) {
 
+    $sql = 'SELECT per_pwd FROM personne WHERE per_num='.$num;
+
+    $req = $this->db->query($sql);
+
+    $oldPwd = $req->fetch();
+
+    if ($oldPwd['per_pwd'] != $mdp) {
+      $salt = "48@!alsd";
+
+      $mdp_crypte = sha1(sha1($mdp).$salt);
+    } else {
+      $mdp_crypte = $mdp;
+    }
+
+    $sql = 'UPDATE personne SET per_nom=\''.$nom.'\', per_prenom=\''.$prenom.'\', per_tel=\''.$tel.'\', per_mail=\''.$mail.'\', per_login=\''.$login.'\', per_pwd=\''.$mdp_crypte.'\'
+    WHERE per_num='.$num;
+
+    $req = $this->db->query($sql);
+
+    $req->closeCursor();
+  }
 }

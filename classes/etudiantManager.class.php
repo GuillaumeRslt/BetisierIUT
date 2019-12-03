@@ -39,4 +39,14 @@ private $db;
 
   }
 
+  public function modifEtudiant($num, $dep, $div) {
+
+    $sql = 'UPDATE etudiant SET dep_num=\''.$dep.'\', div_num=\''.$div.'\'
+    WHERE per_num='.$num;
+
+    $req = $this->db->query($sql);
+
+    $req->closeCursor();
+  }
+
 }
