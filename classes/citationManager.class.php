@@ -94,4 +94,58 @@ private $db;
 
     $req->closeCursor();
   }
+
+  public function getPlusVieilleDate(){
+
+    $sql = 'SELECT cit_date as plusVieilleDate FROM citation
+    HAVING plusVieilleDate <= all(SELECT cit_date FROM citation)';
+
+    $req = $this->db->query($sql);
+
+    $date = $req->fetch();
+
+    return $date['plusVieilleDate'];
+    $req->closeCursor();
+  }
+
+  public function getListResultatRechercheCit($num, $dateDeb, $dateFin, $noteDeb, $noteFin){
+  $listeCitation =array();
+
+  if ($num == 0) {
+
+    $sql = 'SELECT c.cit_num, concat(per_nom,per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
+    FROM citation c
+    JOIN personne p ON c.per_num=p.per_num
+    JOIN vote v ON c.cit_num=v.cit_num
+    WHERE cit_valide=1 AND cit_date_valide is not null
+    AND cit_date BETWEEN \''.$dateDeb.'\' AND \''.$dateFin.'\'
+    GROUP BY per_nom, c.cit_num, cit_date
+    HAVING AVG(vot_valeur) BETWEEN '.$noteDeb.' AND '.$noteFin.'
+    ORDER BY cit_date desc';
+
+  } else {
+
+    $sql = 'SELECT c.cit_num, concat(per_nom,per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
+    FROM citation c
+    JOIN personne p ON c.per_num=p.per_num
+    JOIN vote v ON c.cit_num=v.cit_num
+    WHERE cit_valide=1 AND cit_date_valide is not null
+    AND p.per_num='.$num.'
+    AND cit_date BETWEEN \''.$dateDeb.'\' AND \''.$dateFin.'\'
+    GROUP BY per_nom, c.cit_num, cit_date
+    HAVING AVG(vot_valeur) BETWEEN '.$noteDeb.' AND '.$noteFin.'
+    ORDER BY cit_date desc';
+
+  }
+
+  $req= $this->db->query($sql);
+
+  while ($citation = $req->fetch(PDO::FETCH_OBJ)) {
+    $listeCitation[] = new Citation($citation);
+  }
+
+  return $listeCitation;
+  $req->closeCursor();
+}
+
 }

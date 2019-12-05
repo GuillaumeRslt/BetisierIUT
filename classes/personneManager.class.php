@@ -23,6 +23,23 @@ private $db;
 
   }
 
+  public function getListSalarie() {
+    $listeSalarie=array();
+
+    $sql='SELECT p.per_num, per_nom FROM personne p
+    JOIN salarie s ON p.per_num=s.per_num';
+
+    $req= $this->db->query($sql);
+
+    while ($personne = $req->fetch(PDO::FETCH_OBJ)) {
+      $listeSalarie[] = new Personne($personne);
+    }
+
+    $req->closeCursor();
+    return $listeSalarie;
+
+  }
+
   public function getNbPersonne() {
     $sql = 'SELECT count(*) AS nbPersonne FROM personne';
 
