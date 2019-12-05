@@ -32,7 +32,8 @@ if ( ($manager->isGoodLog($_POST["nom"], $_POST["mdp"])) && ($_SESSION["img1"] +
   <?php $_SESSION["login"]=$_POST["nom"];
   $_SESSION["num"]=$managerPer->getNumPer($_POST["nom"], $_POST["mdp"]);?>
 
-  <a href="index.php?page=0" > Retour à l'accueil </a>
+<meta http-equiv="refresh" content="2; URL=index.php?page=0">
+  <p> Redirection automatique dans 2 secondes. </p>
 
 <?php }
     else { //Connexion mauvaise ?>
