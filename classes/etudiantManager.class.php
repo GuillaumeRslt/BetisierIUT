@@ -49,4 +49,13 @@ private $db;
     $req->closeCursor();
   }
 
+  public function suprEtudiant($num) {
+    $sql = 'DELETE FROM etudiant WHERE per_num='.$num;
+
+    $req = $this->db->query($sql);
+
+    $req->closeCursor();
+  }
+
+
 }

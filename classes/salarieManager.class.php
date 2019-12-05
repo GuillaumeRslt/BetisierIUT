@@ -69,4 +69,12 @@ private $db;
     $req->closeCursor();
   }
 
+  public function suprSalarie($num) {
+
+  $sql = 'DELETE FROM salarie WHERE per_num='.$num;
+
+  $req = $this->db->query($sql);
+
+  $req->closeCursor();
+  }
 }

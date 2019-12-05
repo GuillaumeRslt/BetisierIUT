@@ -2,6 +2,7 @@
 
     $manager = new PersonneManager($db);
 		$managerSal = new SalarieManager($db);
+    $managerEtu = new EtudiantManager($db);
 		$managerFon = new FonctionManager($db);
 		$managerDiv = new DivisionManager($db);
 		$managerDep = new DepartementManager($db);

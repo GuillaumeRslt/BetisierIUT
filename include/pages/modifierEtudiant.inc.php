@@ -1,5 +1,10 @@
 <h1>Modifier un étudiant</h1>
 
+<?php if ($manager->isSalarie($_SESSION["modif"]) ) {
+    $managerSal->suprSalarie($_SESSION["modif"]);
+    $managerEtu->ajoutEtudiant($_SESSION["modif"], 1, 1);
+}?>
+
   <form name="ModifEtudiant" action ="index.php?page=20" method = "post" id = "ModifEtudiant">
 
     <label>Année : </label>
