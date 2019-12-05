@@ -59,7 +59,8 @@
 
   <p><img class = "icone" src="image/valid.png" alt="ajSalarie"/> Le salarié a été ajouté !</p>
 
-    <a href="index.php?page=0" > Retour à l'accueil </a>
+  <meta http-equiv="refresh" content="2; URL=index.php?page=0">
+    <p> Redirection automatique dans 2 secondes. </p>
 
 <?php }
 } ?>
