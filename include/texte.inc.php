@@ -72,7 +72,7 @@ case 8:
     break;
 case 9:
 	// inclure ici la page supprimer citation
-	include("pages/supprmierCitation.inc.php");
+	include("pages/supprimerCitation.inc.php");
     break;
 case 17:
 	// inclure ici la page noter citation
