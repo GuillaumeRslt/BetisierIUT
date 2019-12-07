@@ -33,6 +33,9 @@ case 4:
 	// inclure ici la page suppression personnes
 	include_once('pages/supprimerPersonne.inc.php');
     break;
+case 21:
+	include_once('pages/suppressionPersonne.inc.php');
+		break;
 case 14:
  	// include ici la page de détail des personne
 	include_once('pages/detailPersonne.inc.php');

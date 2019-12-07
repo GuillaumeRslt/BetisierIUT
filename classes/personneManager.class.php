@@ -131,4 +131,13 @@ private $db;
 
     $req->closeCursor();
   }
+
+  public function suprPersonne($num) {
+
+  $sql = 'DELETE FROM personne WHERE per_num='.$num;
+
+  $req = $this->db->query($sql);
+
+  $req->closeCursor();
+  }
 }
