@@ -11,7 +11,7 @@ empty($_POST["citation"]) ) { ?>
 	<form name="ajCitation" id="ajCitation" action="#" method="post" >
 
     <label>Enseignant : </label>
-    <select class="champ" id="enseignant" name="enseignant" >
+    <select class="champ" id="enseignant" name="enseignant" required>
       <?php
       $listeEnseignant = $managerSal->getEnseignant();
       foreach ($listeEnseignant as $enseignant) { ?>
@@ -22,21 +22,43 @@ empty($_POST["citation"]) ) { ?>
         ?>
       </select>	<br /><br />
 
-		Date Citation : <input type="date" size = 30 maxlength = 50 name="date"><br /><br />
-    Citation : <input rows="3" cols="30" name="citation"><br /><br />
+		<label> Daet citation : </label>
+		<input type="date" size = 30 maxlength = 50 name="date" required><br /><br />
+    <label> Citation : </label><br />
+		<textarea rows="3" size="30" name="citation" required></textarea><br /><br />
 
 		<input type=submit value="Valider">
 	</form>
 
 <?php } else {
-  if (empty($_POST["date"]) || empty($_POST["citation"]) ) {?>
 
-	<h3><img class = "icone" src="image/erreur.png" alt="ajCitation"/> Certains champs ne sont pas remplis...</h3>
+	$citation = explode(" ", $_POST["citation"]);
+	echo $_POST["citation"];
+
+	$citationCorrigee = "";
+	 $iterateur = 0;
+
+			while (!empty($citation[$iterateur]))  {
+
+				$mot = $citation[$iterateur];
+
+				if ( !$managerCitation->isInterdit($mot) ) {
+					$citationCorrigee = $citationCorrigee.$mot.' ';
+				} else {
+					$citationCorrigee = $citationCorrigee.'--- ';
+				}
+
+				$iterateur++;
+			}
+
+  if ($citationCorrigee != $_POST["citation"] ) {?>
 
   <form name="ajCitation" id="ajCitation" action="#" method="post" >
 
     <label>Enseignant : </label>
     <select class="champ" id="enseignant" name="enseignant" >
+			<?php $salarie = $managerSal->getSalarie($_POST["enseignant"]); ?>
+			<option value="<?php echo $_POST["enseignant"] ?>"><?php echo $salarie->getNom(); ?></option>
       <?php
       $listeEnseignant = $managerSal->getEnseignant();
       foreach ($listeEnseignant as $enseignant) { ?>
@@ -47,13 +69,30 @@ empty($_POST["citation"]) ) { ?>
         ?>
       </select>	<br /><br />
 
-		Date Citation : <input type="date" size = 30 maxlength = 50 name="date" value="<?php echo $_POST["date"]; ?>"><br /><br />
-		Citation : <input rows="3" cols="30" name="citation" value="<?php echo $_POST["citation"]; ?>"><br /><br />
+		<label> Date Citation : </label>
+		<input type="date" size = 30 maxlength = 50 name="date" value="<?php echo $_POST["date"]; ?>"><br /><br />
+		<label> Citation : </label><br />
+		<textarea rows="3" cols="30" name="citation" ><?php echo $citationCorrigee; ?></textarea><br /><br />
 
+		<p>
+<?php
+		$iterateur = 0;
+
+			 while (!empty($citation[$iterateur]))  {
+
+				 $mot = $citation[$iterateur];
+
+				 if ( $managerCitation->isInterdit($mot) ) {
+					echo '<img class = "icone" src="image/erreur.png" alt="ajCitation"/> Le mot : '.$mot.' n\'est pas autorisé<br />';
+				 }
+
+				 $iterateur++;
+			 }
+			 ?>
+
+		 </p>
 		<input type=submit value="Valider">
 	</form>
-
-
 
 <?php } else { ?>
 

@@ -42,14 +42,22 @@ private $db;
     return $nbCitation["nbCitation"];
   }
 
-  public function ajoutCitation($enseignant, $num, $citation, $date) {
+  public function ajoutCitation($enseignant, $num, $citation, $dateCit) {
 
     $dateDepo = $this->getDateJour();
 
     $sql = 'INSERT INTO citation (per_num, per_num_etu, cit_libelle, cit_date, cit_valide, cit_date_depo)
-    VALUES(\''.$enseignant.'\', \''.$num.'\', \''.$citation.'\', \''.$date.'\', 0, \''.$dateDepo.'\')';
+    VALUES(:enseignant, :num, :citation, :dateCit, 0, :dateDepo)';
 
-    $req = $this->db->query($sql);
+    $req = $this->db->prepare($sql);
+
+    $req->bindValue(':enseignant',$enseignant,PDO::PARAM_STR);
+    $req->bindValue(':num',$num,PDO::PARAM_STR);
+    $req->bindValue(':citation',$citation,PDO::PARAM_STR);
+    $req->bindValue(':dateCit',$dateCit,PDO::PARAM_STR);
+    $req->bindValue(':dateDepo',$dateDepo,PDO::PARAM_STR);
+
+    $req->execute();
 
     $req->closeCursor();
 
@@ -146,6 +154,29 @@ private $db;
 
   return $listeCitation;
   $req->closeCursor();
-}
+  }
+
+  public function isInterdit($mot)
+  {
+    $req = $this->db->prepare('SELECT COUNT(*) AS nb FROM (SELECT mot_interdit ,
+                              MATCH (mot_interdit)
+                              AGAINST (:mot)
+                              AS pertinence FROM mot
+                              WHERE MATCH (mot_interdit)
+                              AGAINST (:mot))T');
+
+    $req->bindValue(':mot',$mot,PDO::PARAM_STR);
+
+    $req->execute();
+
+    $retour = $req->fetch();
+
+    if ($retour["nb"] == 0)
+      return false;
+    else
+      return true;
+
+    $req->closeCursor();
+  }
 
 }
