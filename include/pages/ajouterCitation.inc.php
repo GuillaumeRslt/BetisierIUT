@@ -33,7 +33,6 @@ empty($_POST["citation"]) ) { ?>
 <?php } else {
 
 	$citation = explode(" ", $_POST["citation"]);
-	echo $_POST["citation"];
 
 	$citationCorrigee = "";
 	 $iterateur = 0;
@@ -83,7 +82,7 @@ empty($_POST["citation"]) ) { ?>
 				 $mot = $citation[$iterateur];
 
 				 if ( $managerCitation->isInterdit($mot) ) {
-					echo '<img class = "icone" src="image/erreur.png" alt="ajCitation"/> Le mot : '.$mot.' n\'est pas autorisé<br />';
+					echo '<img class = "icone" src="image/erreur.png" alt="ajCitation"/> Le mot : <label style="color : red;">'.$mot.'</label> n\'est pas autorisé<br />';
 				 }
 
 				 $iterateur++;
@@ -100,7 +99,8 @@ empty($_POST["citation"]) ) { ?>
 
 <p><img class = "icone" src="image/valid.png" alt="ajCitation"/> La citation a été ajouté !</p>
 
-  <a href="index.php?page=0" > Retour à l'accueil </a>
+<meta http-equiv="refresh" content="2; URL=index.php?page=0">
+	<p> Redirection automatique dans 2 secondes. </p>
 
 <?php  }
 }?>
