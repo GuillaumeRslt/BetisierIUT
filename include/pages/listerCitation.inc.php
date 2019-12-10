@@ -17,7 +17,7 @@
 		  </tr>
 
 		<?php
-	
+
 		$listeCitation = $manager->getList();
 		foreach ($listeCitation as $citation) {
 			?>
@@ -26,10 +26,8 @@
 			<td><?php echo $citation->getLibelle(); ?></td>
 			<td><?php echo getFrenchDate($citation->getDate()); ?></td>
 			<td><?php echo $citation->getMoyNote(); ?></td>
-			<td><?php if ($managerPer->isSalarie($_SESSION["num"]) ) {
-				echo '<img class = "icone" src="image/erreur.png" alt="NoteCitation "/>';
-			}
-			else {
+			<td><?php if (!$managerPer->isSalarie($_SESSION["num"]) ) {
+				echo '<td>';
 				if ( $manager->isNote($_SESSION["num"], $citation->getNum()) ) {
 					echo '<img class = "icone" src="image/erreur.png" alt="NoteCitation "/>';
 				} else {
@@ -37,8 +35,9 @@
 				&cit_nom='.$citation->getPerNom().'&cit_lib='.$citation->getLibelle().'
 				&cit_date='.getFrenchDate($citation->getDate()).'&cit_moy='.$citation->getMoyNote().'" >
 				<img class = "icone" src="image/modifier.png" alt="NoteCitation"/></a>';
-			}
-		}?></td>
+				}
+			echo '</td>';
+			}?>
 	</tr>
 		<?php
 		}

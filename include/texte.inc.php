@@ -23,11 +23,11 @@ case 1:
 
 case 2:
 	// inclure ici la page liste des personnes
-	include_once('pages/AjouterPersonne.inc.php');
+	include_once('pages/ajouterPersonne.inc.php');
     break;
 case 3:
 	// inclure ici la page modification des personnes
-	include("pages/ModifierPersonne.inc.php");
+	include("pages/modifierPersonne.inc.php");
     break;
 case 4:
 	// inclure ici la page suppression personnes
@@ -73,6 +73,9 @@ case 8:
 	// inclure ici la page valider citation
 	include("pages/validerCitation.inc.php");
     break;
+case 22:
+	include_once("pages/validationCitation.inc.php");
+		break;
 case 9:
 	// inclure ici la page supprimer citation
 	include("pages/supprimerCitation.inc.php");

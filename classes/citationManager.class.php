@@ -29,10 +29,43 @@ private $db;
 
   }
 
+  public function getAllList() {
+    $listeCitation = array();
+
+    $sql = 'SELECT c.cit_num, concat(per_nom,per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
+    FROM citation c
+    JOIN personne p ON c.per_num=p.per_num
+    LEFT JOIN vote v ON c.cit_num=v.cit_num
+    GROUP BY per_nom, c.cit_num, cit_date
+    ORDER BY cit_date desc';
+
+    $req = $this->db->query($sql);
+
+    while ($citation = $req->fetch(PDO::FETCH_OBJ)) {
+      $listeCitation[] = new Citation($citation);
+    }
+
+    $req->closeCursor();
+    return $listeCitation;
+
+  }
+
   public function getNbCitation() {
     $sql = 'SELECT count(*) AS nbCitation
     FROM citation c
     WHERE cit_valide=1 AND cit_date_valide is not null';
+
+    $req = $this->db->query($sql);
+
+    $nbCitation = $req->fetch();
+
+    $req->closeCursor();
+    return $nbCitation["nbCitation"];
+  }
+
+  public function getNbAllCitation() {
+    $sql = 'SELECT count(*) AS nbCitation
+    FROM citation c';
 
     $req = $this->db->query($sql);
 
@@ -175,6 +208,36 @@ private $db;
       return false;
     else
       return true;
+
+    $req->closeCursor();
+  }
+
+  public function isValide($num) {
+    $sql = 'SELECT COUNT(*) AS nbCitation
+    FROM citation c
+    WHERE cit_valide=1 AND cit_date_valide is not null AND cit_num=\''.$num.'\'';
+
+    $req = $this->db->query($sql);
+
+    $nbCitation = $req->fetch();
+
+    if ($nbCitation["nbCitation"] == 0)
+      return false;
+    else
+      return true;
+
+    $req->closeCursor();
+  }
+
+  public function validerCit($num) {
+
+    $date = $this->getDateJour();
+
+    $sql = 'UPDATE citation SET cit_valide=1 cit_date_valide=\''.$date.'\' WHERE cit_num=\''.$num.'\'';
+
+    $req = $this->db->query($sql);
+
+    $nbSalarie = $req->fetch();
 
     $req->closeCursor();
   }

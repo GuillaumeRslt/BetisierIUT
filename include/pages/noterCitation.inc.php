@@ -32,7 +32,7 @@
 
 <?php } else if (empty($_POST["noteCit"])) { ?>
 
-  <?php /*$manager->noterCitation($_SESSION["citNum"]); */ ?>
+  <?php $manager->noterCitation($_SESSION["citNum"]); ?>
 
   <p><img class = "icone" src="image/erreur.png" alt="noteCitation"/> Faut mettre une note</p>
 
