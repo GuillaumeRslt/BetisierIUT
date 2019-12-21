@@ -22,7 +22,7 @@ empty($_POST["citation"]) ) { ?>
         ?>
       </select>	<br /><br />
 
-		<label> Daet citation : </label>
+		<label> Date citation : </label>
 		<input type="date" size = 30 maxlength = 50 name="date" required><br /><br />
     <label> Citation : </label><br />
 		<textarea rows="3" size="30" name="citation" required></textarea><br /><br />
@@ -50,7 +50,7 @@ empty($_POST["citation"]) ) { ?>
 				$iterateur++;
 			}
 
-  if ($citationCorrigee != $_POST["citation"] ) {?>
+  if ($citationCorrigee != $_POST["citation"].' ' ) {?>
 
   <form name="ajCitation" id="ajCitation" action="#" method="post" >
 
