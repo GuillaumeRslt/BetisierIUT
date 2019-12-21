@@ -229,11 +229,11 @@ private $db;
     $req->closeCursor();
   }
 
-  public function validerCit($num) {
+  public function validerCit($citNum, $numValide) {
 
     $date = $this->getDateJour();
 
-    $sql = 'UPDATE citation SET cit_valide=1, cit_date_valide=\''.$date.'\' WHERE cit_num=\''.$num.'\'';
+    $sql = 'UPDATE citation SET cit_valide=1, per_num_valide='.$numValide.', cit_date_valide=\''.$date.'\' WHERE cit_num=\''.$citNum.'\'';
 
     $req = $this->db->query($sql);
 

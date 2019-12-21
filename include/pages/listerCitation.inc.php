@@ -19,7 +19,12 @@
 		<?php
 
 		$listeCitation = $manager->getList();
-		for ($iterateur = 0; $iterateur < 3; $iterateur++) {
+
+		$nbCitation = $manager->getNbCitation();
+		if ($nbCitation > 3)
+				$nbCitation = 3;
+
+		for ($iterateur = 0; $iterateur < $nbCitation; $iterateur++) {
 			?>
 			<tr>
 			<td><?php echo $listeCitation[$iterateur]->getPerNom(); ?></td>
