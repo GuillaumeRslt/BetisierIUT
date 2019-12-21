@@ -11,7 +11,7 @@
 		    <th>Libellé</th>
 				<th>Date</th>
 				<th>Moyenne des notes</th>
-				<?php if ( !$managerPer->isSalarie($_SESSION["num"]) ) {
+				<?php if ( isset($_SESSION["num"]) && !$managerPer->isSalarie($_SESSION["num"]) ) {
 						echo '<th>Noter</th>';
 				} ?>
 		  </tr>
@@ -26,7 +26,7 @@
 			<td><?php echo $listeCitation[$iterateur]->getLibelle(); ?></td>
 			<td><?php echo getFrenchDate($listeCitation[$iterateur]->getDate()); ?></td>
 			<td><?php echo $listeCitation[$iterateur]->getMoyNote(); ?></td>
-			<td><?php if (!$managerPer->isSalarie($_SESSION["num"]) ) {
+			<td><?php if ( isset($_SESSION["num"]) && !$managerPer->isSalarie($_SESSION["num"]) ) {
 				echo '<td>';
 				if ( $manager->isNote($_SESSION["num"], $listeCitation[$iterateur]->getNum()) ) {
 					echo '<img class = "icone" src="image/erreur.png" alt="NoteCitation "/>';
@@ -37,7 +37,7 @@
 				<img class = "icone" src="image/modifier.png" alt="NoteCitation"/></a>';
 				}
 			echo '</td>';
-			}?>
+		}?>
 	</tr>
 		<?php
 		}
