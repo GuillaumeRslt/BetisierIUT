@@ -1,4 +1,4 @@
-<h1>Valider une citation</h1>
+<h1>Supprimer une citation</h1>
 
 <?php $db = new Mypdo();
 
