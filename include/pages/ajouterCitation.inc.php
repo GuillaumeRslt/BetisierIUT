@@ -50,7 +50,7 @@ empty($_POST["citation"]) ) { ?>
 				$iterateur++;
 			}
 
-  if ($citationCorrigee != $_POST["citation"] ) {?>
+  if ($citationCorrigee != $_POST["citation"].' ' ) {?>
 
   <form name="ajCitation" id="ajCitation" action="#" method="post" >
 
