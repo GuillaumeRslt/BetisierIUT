@@ -5,6 +5,9 @@
   $manager = new CitationManager($db);
   $managerCo = new ConnexionManager($db);
   ?>
+
+  <?php if ( empty($_GET["cit_num"]) ) {?>
+
   <p>Actuellement <?php echo $manager->getNbAllCitation(); ?> citations sont enregistrées</p>
   <table>
     <tr>
@@ -29,7 +32,7 @@
     <td><?php echo $citation->getMoyNote(); ?></td>
     <?php if ($managerCo->isAdmin($_SESSION["login"]) ) {
       echo '<td>';
-      echo '<a href="index.php?page=23&cit_num='.$citation->getNum().'" >
+      echo '<a href="index.php?page=9&cit_num='.$citation->getNum().'" >
       <img class = "icone" src="image/erreur.png" alt="SupprimerCitation"/></a>';
     } ?></td>
 </tr>
@@ -38,3 +41,13 @@
   ?>
 
 </table>
+
+<?php } else { ?>
+
+  <?php $manager->supprimerCit($_GET["cit_num"]); ?>
+
+  <p><img class = "icone" src="image/valid.png" alt="supprimerCitation"/>La citation à bien été supprimée</p>
+
+  <a href="index.php?page=9" > Retour aux citations </a>
+
+<?php } ?>

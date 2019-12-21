@@ -247,5 +247,12 @@ private $db;
   $req = $this->db->query($sql);
 
   $req->closeCursor();
+
+  $sql = 'DELETE FROM vote WHERE cit_num='.$num;
+
+  $req = $this->db->query($sql);
+
+  $req->closeCursor();
+
   }
 }
