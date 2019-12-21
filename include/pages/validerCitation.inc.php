@@ -4,6 +4,8 @@
   $manager = new CitationManager($db);
   $managerCo = new ConnexionManager($db);
   ?>
+<?php if ( empty($_GET["cit_num"]) ) {?>
+
   <p>Actuellement <?php echo $manager->getNbAllCitation(); ?> citations sont enregistrées</p>
   <table>
     <tr>
@@ -32,7 +34,7 @@
       if ( $manager->isValide($citation->getNum()) ) {
         echo '<img class = "icone" src="image/erreur.png" alt="ValiderCitation "/>';
       } else {
-      echo '<a href="index.php?page=22&cit_num='.$citation->getNum().'" >
+      echo '<a href="index.php?page=8&cit_num='.$citation->getNum().'" >
       <img class = "icone" src="image/valid.png" alt="ValiderCitation"/></a>';
     }
   }?></td>
@@ -42,3 +44,13 @@
   ?>
 
 </table>
+
+<?php } else {
+
+  $manager->validerCit($_GET["cit_num"], $_SESSION["num"]); ?>
+
+  <p><img class = "icone" src="image/valid.png" alt="validerCitation"/>La citation à bien été validée</p>
+
+  <a href="index.php?page=8" > Retour aux citations </a>
+
+<?php } ?>

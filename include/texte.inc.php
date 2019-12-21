@@ -73,9 +73,6 @@ case 8:
 	// inclure ici la page valider citation
 	include("pages/validerCitation.inc.php");
     break;
-case 22:
-	include_once("pages/validationCitation.inc.php");
-		break;
 case 9:
 	// inclure ici la page supprimer citation
 	include("pages/supprimerCitation.inc.php");
