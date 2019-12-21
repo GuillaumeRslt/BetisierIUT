@@ -10,10 +10,10 @@ private $db;
   public function getList() {
     $listeCitation = array();
 
-    $sql = 'SELECT c.cit_num, concat(per_nom,per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
+    $sql = 'SELECT c.cit_num, concat(per_nom, \' \', per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
     FROM citation c
     JOIN personne p ON c.per_num=p.per_num
-    JOIN vote v ON c.cit_num=v.cit_num
+    LEFT JOIN vote v ON c.cit_num=v.cit_num
     WHERE cit_valide=1 AND cit_date_valide is not null
     GROUP BY per_nom, c.cit_num, cit_date
     ORDER BY cit_date desc';
@@ -32,7 +32,7 @@ private $db;
   public function getAllList() {
     $listeCitation = array();
 
-    $sql = 'SELECT c.cit_num, concat(per_nom,per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
+    $sql = 'SELECT c.cit_num, concat(per_nom, \' \', per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
     FROM citation c
     JOIN personne p ON c.per_num=p.per_num
     LEFT JOIN vote v ON c.cit_num=v.cit_num
@@ -154,10 +154,10 @@ private $db;
 
   if ($num == 0) {
 
-    $sql = 'SELECT c.cit_num, concat(per_nom,per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
+    $sql = 'SELECT c.cit_num, concat(per_nom, \' \', per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
     FROM citation c
     JOIN personne p ON c.per_num=p.per_num
-    JOIN vote v ON c.cit_num=v.cit_num
+    LEFT JOIN vote v ON c.cit_num=v.cit_num
     WHERE cit_valide=1 AND cit_date_valide is not null
     AND cit_date BETWEEN \''.$dateDeb.'\' AND \''.$dateFin.'\'
     GROUP BY per_nom, c.cit_num, cit_date
@@ -166,10 +166,10 @@ private $db;
 
   } else {
 
-    $sql = 'SELECT c.cit_num, concat(per_nom,per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
+    $sql = 'SELECT c.cit_num, concat(per_nom, \' \', per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
     FROM citation c
     JOIN personne p ON c.per_num=p.per_num
-    JOIN vote v ON c.cit_num=v.cit_num
+    LEFT JOIN vote v ON c.cit_num=v.cit_num
     WHERE cit_valide=1 AND cit_date_valide is not null
     AND p.per_num='.$num.'
     AND cit_date BETWEEN \''.$dateDeb.'\' AND \''.$dateFin.'\'
@@ -233,13 +233,19 @@ private $db;
 
     $date = $this->getDateJour();
 
-    $sql = 'UPDATE citation SET cit_valide=1 cit_date_valide=\''.$date.'\' WHERE cit_num=\''.$num.'\'';
+    $sql = 'UPDATE citation SET cit_valide=1, cit_date_valide=\''.$date.'\' WHERE cit_num=\''.$num.'\'';
 
     $req = $this->db->query($sql);
-
-    $nbSalarie = $req->fetch();
 
     $req->closeCursor();
   }
 
+  public function supprimerCit($num) {
+
+  $sql = 'DELETE FROM citation WHERE cit_num='.$num;
+
+  $req = $this->db->query($sql);
+
+  $req->closeCursor();
+  }
 }
