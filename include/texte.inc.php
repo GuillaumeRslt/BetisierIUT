@@ -80,6 +80,10 @@ case 9:
 	// inclure ici la page supprimer citation
 	include("pages/supprimerCitation.inc.php");
     break;
+case 23:
+	// inclure ici la page supprimant la citation
+	include("pages/suppressionCitation.inc.php");
+		break;
 case 17:
 	// inclure ici la page noter citation
 	include("pages/noterCitation.inc.php");
