@@ -156,3 +156,10 @@ h1{
  	position:relative;
  	top:2px;
 }
+td{
+	border:solid 1px;
+	border-bottom: solid 1px;
+}
+th{
+	border:solid 1px;
+}

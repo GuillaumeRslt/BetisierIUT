@@ -11,6 +11,7 @@
 			<tr>
 				<th>Nom</th>
 				<th>Prenom</th>
+				<th>Modifier</th>
 			</tr>
 
 		<?php
