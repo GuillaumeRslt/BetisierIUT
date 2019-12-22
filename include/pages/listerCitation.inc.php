@@ -32,8 +32,10 @@
 			<td><?php echo getFrenchDate($listeCitation[$iterateur]->getDate()); ?></td>
 			<td><?php echo $listeCitation[$iterateur]->getMoyNote(); ?></td>
 			<td><?php if ( isset($_SESSION["num"]) && !$managerPer->isSalarie($_SESSION["num"]) ) {
+				//On vérifie si quelqu'un est connecté et si c'est un étudiant
 				echo '<td>';
 				if ( $manager->isNote($_SESSION["num"], $listeCitation[$iterateur]->getNum()) ) {
+					//Si la citation est déjà notée
 					echo '<img class = "icone" src="image/erreur.png" alt="NoteCitation "/>';
 				} else {
   			echo '<a href="index.php?page=17&cit_num='.$listeCitation[$iterateur]->getNum().'

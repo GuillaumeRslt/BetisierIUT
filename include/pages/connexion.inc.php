@@ -6,7 +6,8 @@
   $managerPer = new PersonneManager($db);
   ?>
 
-<?php if (empty($_POST["nom"]) && empty($_POST["mdp"]) ) { ?>
+<?php if (empty($_POST["nom"]) && empty($_POST["mdp"]) ) {
+  //Première fois qu'on rentre sur la page ?>
 
 <form name="connexion" id="connexion" action="#" method="post" >
   Nom d'utilisateur : <input size = 30 maxlength = 50 name="nom"><br /><br />
@@ -25,7 +26,8 @@
 </form>
 
 <?php } else {
-if ( ($manager->isGoodLog($_POST["nom"], $_POST["mdp"])) && ($_SESSION["img1"] + $_SESSION["img2"] == $_POST["verifCode"]) ) { ?>
+if ( ($manager->isGoodLog($_POST["nom"], $_POST["mdp"])) && ($_SESSION["img1"] + $_SESSION["img2"] == $_POST["verifCode"]) ) {
+  //Si les données renseignées sont correctes?>
 
 <p><img class = "icone" src="image/valid.png" alt="connexion"/> Vous avez bien été connecté !</p>
 

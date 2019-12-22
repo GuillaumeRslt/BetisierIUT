@@ -6,7 +6,7 @@ $managerCitation = new CitationManager($db);
 ?>
 
 <?php if ( empty($_POST["enseignant"]) && empty($_POST["Date"]) &&
-empty($_POST["citation"]) ) { ?>
+empty($_POST["citation"]) ) { //Si première fois qu'on rentre sur la page?>
 
 	<form name="ajCitation" id="ajCitation" action="#" method="post" >
 
@@ -31,7 +31,7 @@ empty($_POST["citation"]) ) { ?>
 	</form>
 
 <?php } else {
-
+//On modifie la ctation si elle contient des mots interdit
 	$citation = explode(" ", $_POST["citation"]);
 
 	$citationCorrigee = "";
@@ -49,7 +49,7 @@ empty($_POST["citation"]) ) { ?>
 
 				$iterateur++;
 			}
-
+// Si c'est la citation a changée on demande confirmation sinon on la valide diretement
   if ($citationCorrigee != $_POST["citation"].' ' ) {?>
 
   <form name="ajCitation" id="ajCitation" action="#" method="post" >
@@ -76,7 +76,7 @@ empty($_POST["citation"]) ) { ?>
 		<p>
 <?php
 		$iterateur = 0;
-
+// On affiche les mots qui ont été supprimé
 			 while (!empty($citation[$iterateur]))  {
 
 				 $mot = $citation[$iterateur];
@@ -93,7 +93,7 @@ empty($_POST["citation"]) ) { ?>
 		<input type=submit value="Valider">
 	</form>
 
-<?php } else { ?>
+<?php } else { //On ajoute la citation et on confirme l'ajout à l'utilisateur ?>
 
 <?php $managerCitation->ajoutCitation($_POST["enseignant"], $_SESSION["num"], $_POST["citation"], $_POST["date"]); ?>
 

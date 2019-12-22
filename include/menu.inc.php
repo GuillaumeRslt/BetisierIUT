@@ -4,7 +4,8 @@
   $managerPer = new PersonneManager($db);
   ?>
 
-<?php if (!isset($_SESSION["login"]) ) { ?>
+<?php if (!isset($_SESSION["login"]) ) {
+  //Menu pour une personne non connectée?>
 
 <div id="menu">
 	<div id="menuInt">
@@ -26,7 +27,8 @@
 </div>
 
 <?php } else {
-		if ($manager->isAdmin($_SESSION["login"])) {?>
+		if ($manager->isAdmin($_SESSION["login"])) {
+      //Menu pour une personne admin?>
 
 	<div id="menu">
 		<div id="menuInt">
@@ -40,7 +42,8 @@
 			</ul>
 			<p><img class="icone" src="image/citation.gif"  alt="Citation"/>Citations</p>
 			<ul>
-      <?php if ( !$managerPer->isSalarie($_SESSION["num"]) ) { ?>
+      <?php if ( !$managerPer->isSalarie($_SESSION["num"]) ) {
+        //Si on est salarié on ne peut pas ajouter de citation ?>
 				<li><a href="index.php?page=5">Ajouter</a></li>
       <?php } ?>
 				<li><a href="index.php?page=6">Lister</a></li>
@@ -58,7 +61,8 @@
 		</div>
 	</div>
 
-<?php } else if ( $managerPer->isSalarie($_SESSION["num"]) ) { ?>
+<?php } else if ( $managerPer->isSalarie($_SESSION["num"]) ) {
+  //Menu pour un salarié?>
 
 	<div id="menu">
 		<div id="menuInt">
@@ -82,7 +86,8 @@
 		</div>
 	</div>
 
-<?php } else { ?>
+<?php } else {
+  //Menu pour un étudiant?>
 
   <div id="menu">
     <div id="menuInt">

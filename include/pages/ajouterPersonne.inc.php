@@ -27,7 +27,7 @@ empty($_POST["mdp"]) && !isset($_POST["division"]) && !isset($_POST["fonction"])
 		<input type=submit value="Suivant">
 	</form>
 
-<?php } else {
+<?php } else { // Si tous les chemps ne sont pas remplis
 if ( (empty($_POST["nom"]) || empty($_POST["prenom"]) ||
 empty($_POST["tel"]) || empty($_POST["mail"]) || empty($_POST["login"]) ||
 empty($_POST["mdp"])) && (!isset($_POST["division"]) && !isset($_POST["fonction"])) ) { ?>
@@ -52,12 +52,12 @@ empty($_POST["mdp"])) && (!isset($_POST["division"]) && !isset($_POST["fonction"
 
 
 <?php } else {
-
+//On ajoue une personne que si c'est la première fois qu'on passe dans cette boucle
 	if (isset($_POST["nom"]) ) {
  $_SESSION["numNew"] = $managerPer->ajoutPersonne($_POST["nom"], $_POST["prenom"], $_POST["tel"], $_POST["mail"], $_POST["login"], $_POST["mdp"] );
 	}
 
-if ($_POST["catégorie"] == "salarie") {
+if ($_POST["catégorie"] == "salarie") { // On regarde si la personne est un salarié ou un étudiant
 
 include_once("ajouterSalarie.inc.php");
 

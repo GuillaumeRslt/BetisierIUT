@@ -1,6 +1,7 @@
 <h1>Modifier un salarié</h1>
 
 <?php if (!$manager->isSalarie($_SESSION["modif"]) ) {
+  //Si la personne était un étudiant à la base
     $managerEtu->suprEtudiant($_SESSION["modif"]);
     $managerSal->ajoutSalarie($_SESSION["modif"], "0000000000", 1);
 }?>

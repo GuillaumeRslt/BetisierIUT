@@ -5,26 +5,27 @@
   ?>
 <div id="texte">
 <?php
+//On determine le satus de la personne connecté ou non
 $connecter = "";
 if ( isset($_SESSION["num"]) ) {
 	if ( $managerCo->isAdmin($_SESSION["login"]) ) {
 		if ( $managerPer->isSalarie($_SESSION["num"]) )
-			$connecter = "salAdmin";
+			$connecter = "salAdmin"; //salarié admin
 	 	else
-			$connecter = "etuAdmin";
+			$connecter = "etuAdmin"; //étudiant admin
 	} else {
 		if ( $managerPer->isSalarie($_SESSION["num"]) )
-			$connecter = "sal";
+			$connecter = "sal"; //salarié
 	 	else
-			$connecter = "etu";
+			$connecter = "etu"; //étudiant
 	}
 } else
-		$connecter = "pasCo";
+		$connecter = "pasCo"; //personne non connecté
 
 if (!empty($_GET["page"])){
 	$page=$_GET["page"];
-
-	if ( $connecter == "salAdmin" && ($page == 5 || $page == 17 || $page == 15) )
+//On défini les droits sur les pages on fonction du status de l'utilisateur du site
+	if ( $connecter == "salAdmin" && ($page == 5 || $page == 17 || $page == 15) ) 
 		$page = 0;
 	if ( $connecter == "etuAdmin" && $page == 15 )
 		$page = 0;

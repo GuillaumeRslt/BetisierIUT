@@ -5,7 +5,8 @@
   $managerEtu = new EtudiantManager($db);
   ?>
 
-  <?php if ( $managerPer->isSalarie($_GET["per_num"]) == true ) { ?>
+  <?php if ( $managerPer->isSalarie($_GET["per_num"]) == true ) {
+    // Si la personne est un salarié?>
 
     <h1> Détail sur le salarie <?php echo $_GET["per_nom"]; ?> </h1>
 
@@ -33,7 +34,7 @@
     </table>
 
 
-<?php  } else { ?>
+<?php  } else { //Si la personne est un étudiant?>
 
     <h1> Détail sur l'étudiant <?php echo $_GET["per_nom"]; ?> </h1>
 

@@ -12,16 +12,18 @@
     <?php $listePersonne = $manager->getList();
     $iterateur = 0;
 
-  //  print_r($listePersonne);
+//On récupère la l'objet personne qui est à modifier
   while ($listePersonne[$iterateur]->getNum() != $_GET["per_num"] ) {
     $iterateur = $iterateur + 1;
   }
 
   $personne = $listePersonne[$iterateur]; ?>
 
-<?php if ( !isset($_POST["nom"]) ) {?>
+<?php if ( !isset($_POST["nom"]) ) {
+  //Si première fois qu'on rentre sur cette page?>
 
-<?php if ($manager->isSalarie($_GET["per_num"])) {?>
+<?php if ($manager->isSalarie($_GET["per_num"])) {
+  //Si la personne est un salarié?>
 		<h1>Modifier une personne</h1>
 
 	<form name="ajPersonne" id="ajPersonne" action="#" method="post" >
@@ -37,7 +39,8 @@
 		<input type=submit value="Suivant">
 	</form>
 
-<?php } else { ?>
+<?php } else {
+  //Si la personne est un étudiant?>
 		<h1>Modifier une personne</h1>
 
 	<form name="ajPersonne" id="ajPersonne" action="#" method="post" >
@@ -58,7 +61,8 @@
 } else {
 		if ( empty($_POST["nom"]) || empty($_POST["prenom"]) ||
 		empty($_POST["tel"]) || empty($_POST["mail"]) || empty($_POST["login"]) ||
-		empty($_POST["mdp"]) ) {?>
+		empty($_POST["mdp"]) ) {
+      //Si la modification n'est pas complète?>
 
 				<h1>Modifier une personne</h1>
 
@@ -85,12 +89,14 @@
 		<?php } else { ?>
 
 			<?php
+      //On modifie la personne si c'est la première fois qu'on rentre dans cette condition
 			if ( empty($_POST["telPro"]) ) {
 				$manager->modifPersonne($_GET["per_num"], $_POST["nom"], $_POST["prenom"], $_POST["tel"], $_POST["mail"], $_POST["login"], $_POST["mdp"]);
 			}
 			$_SESSION["modif"]= $_GET["per_num"];
 
 			if ($_POST["catégorie"] == "salarie") {
+        //On modifie la personne en fonction de si il a été sélectionné "étudiant" ou "salarié"
 
 			include_once("modifierSalarie.inc.php");
 
