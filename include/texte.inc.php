@@ -1,10 +1,48 @@
+<?php $db = new Mypdo();
+
+  $managerCo = new ConnexionManager($db);
+  $managerPer = new PersonneManager($db);
+  ?>
 <div id="texte">
 <?php
-if (!empty($_GET["page"])){
-	$page=$_GET["page"];}
-	else
-	{$page=0;
+$connecter = "";
+if ( isset($_SESSION["num"]) ) {
+	if ( $managerCo->isAdmin($_SESSION["login"]) ) {
+		if ( $managerPer->isSalarie($_SESSION["num"]) )
+			$connecter = "salAdmin";
+	 	else
+			$connecter = "etuAdmin";
+	} else {
+		if ( $managerPer->isSalarie($_SESSION["num"]) )
+			$connecter = "sal";
+	 	else
+			$connecter = "etu";
 	}
+} else
+		$connecter = "pasCo";
+
+if (!empty($_GET["page"])){
+	$page=$_GET["page"];
+
+	if ( $connecter == "salAdmin" && ($page == 5 || $page == 17 || $page == 15) )
+		$page = 0;
+	if ( $connecter == "etuAdmin" && $page == 15 )
+		$page = 0;
+	if ( $connecter == "sal" && !($page == 0 || $page == 1 || $page == 2
+	|| $page == 11 || $page == 12 || $page == 16 || $page == 6
+	|| $page == 7 || $page == 10 || $page == 14 ) )
+		$page = 0;
+	if ( $connecter == "etu" && ($page == 3 || $page == 4 || $page == 21 || $page == 18 || $page == 19 || $page == 20 || $page == 15) ) {
+		$page = 0; }
+	if ( $connecter == "pasCo" && !($page == 0 || $page == 1 || $page == 2
+	|| $page == 15 || $page == 6 || $page == 7 || $page == 10
+	|| $page == 14 ) )
+		$page = 0;
+
+	} else {
+	$page=0;
+}
+
 switch ($page) {
 //
 // Accueil

@@ -16,6 +16,7 @@
 		<p><img class="icone" src="image/citation.gif"  alt="Citation"/>Citations</p>
 		<ul>
 			<li><a href="index.php?page=6">Lister</a></li>
+      <li><a href="index.php?page=7">Rechercher</a></li>
 		</ul>
 		<p><img class = "icone" src="image/ville.png" alt="Ville"/>Ville</p>
 		<ul>
@@ -39,7 +40,9 @@
 			</ul>
 			<p><img class="icone" src="image/citation.gif"  alt="Citation"/>Citations</p>
 			<ul>
+      <?php if ( !$managerPer->isSalarie($_SESSION["num"]) ) { ?>
 				<li><a href="index.php?page=5">Ajouter</a></li>
+      <?php } ?>
 				<li><a href="index.php?page=6">Lister</a></li>
 				<li><a href="index.php?page=7">Rechercher</a></li>
 				<li><a href="index.php?page=8">Valider</a></li>
