@@ -33,9 +33,9 @@ if (!empty($_GET["page"])){
 	|| $page == 11 || $page == 12 || $page == 16 || $page == 6
 	|| $page == 7 || $page == 10 || $page == 14 ) )
 		$page = 0;
-	if ( $connecter == "etu" && ($page == 3 || $page == 4 || $page == 21 || $page == 18 || $page == 19 || $page == 20 || $page == 13 || $page == 15) ) {
+	if ( $connecter == "etu" && ($page == 3 || $page == 4 || $page == 8 || $page == 9 || $page == 21 || $page == 18 || $page == 19 || $page == 20 || $page == 13 || $page == 15) ) {
 		$page = 0; }
-	if ( $connecter == "pasCo" && !($page == 0 || $page == 1 || $page == 2
+	if ( $connecter == "pasCo" && !($page == 0 || $page == 1
 	|| $page == 15 || $page == 6 || $page == 7 || $page == 10
 	|| $page == 14 ) )
 		$page = 0;
