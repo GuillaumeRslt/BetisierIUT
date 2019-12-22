@@ -18,9 +18,7 @@
 		foreach ($listePersonne as $personne) {
 			?>
 			<tr>
-			<td> <a href="index.php?page=14
-														&per_num=<?php echo $personne->getNum(); ?>
-														&per_nom=<?php echo $personne->getNom(); ?> ">
+			<td> <a href="index.php?page=14&per_num=<?php echo $personne->getNum(); ?>&per_nom=<?php echo $personne->getNom(); ?> ">
 														<?php echo $personne->getNum(); ?> </a>
 													</td>
 			<td><?php echo $personne->getNom(); ?></td>

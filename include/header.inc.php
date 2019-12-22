@@ -30,9 +30,9 @@
 		<div id="entete">
 			<div id="logo">
         <?php if (isset($_SESSION["num"])) { ?>
-            <img class = "image" src="image/smile.jpg" alt="smile" width="80%"/>
+            <img class = "image" src="image/smile.jpg" alt="smile" width="200"/>
       <?php  } else { ?>
-            <img src="image/lebetisier.gif" alt="lebetisier" width="70%"/>
+            <img src="image/lebetisier.gif" alt="lebetisier" width="150"/>
       <?php  }?>
 			</div>
 			<div id="titre">

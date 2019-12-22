@@ -12,7 +12,7 @@ $listeSalarie = $managerPer->getListSalarie();
 
    <form name="rechercherCit" id="rechercherCit" action="#" method="post">
 
-     Salarie : <select class="champ" id="salarie" name="salarie"/>
+     Salarie : <select class="champ" id="salarie" name="salarie">
      <option value="0" > Sélectionnez salarié </option><?php
      foreach ($listeSalarie as $salarie) {  ?>
          <option value= <?php echo $salarie->getNum(); ?>>

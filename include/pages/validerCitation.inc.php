@@ -14,7 +14,7 @@
       <th>Date</th>
       <th>Moyenne des notes</th>
       <?php if ( $managerCo->isAdmin($_SESSION["login"]) ) {
-          echo '<th>Valider</sth>';
+          echo '<th>Valider</th>';
       } ?>
     </tr>
 

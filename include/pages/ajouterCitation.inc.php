@@ -23,9 +23,9 @@ empty($_POST["citation"]) ) { //Si première fois qu'on rentre sur la page?>
       </select>	<br /><br />
 
 		<label> Date citation : </label>
-		<input type="date" size = 30 maxlength = 50 name="date" required><br /><br />
+		<input type="date" size = 30 name="date" required><br /><br />
     <label> Citation : </label><br />
-		<textarea rows="3" size="30" name="citation" required></textarea><br /><br />
+		<textarea rows="3" name="citation" required></textarea><br /><br />
 
 		<input type=submit value="Valider">
 	</form>
@@ -69,7 +69,7 @@ empty($_POST["citation"]) ) { //Si première fois qu'on rentre sur la page?>
       </select>	<br /><br />
 
 		<label> Date Citation : </label>
-		<input type="date" size = 30 maxlength = 50 name="date" value="<?php echo $_POST["date"]; ?>"><br /><br />
+		<input type="date" size = 30 name="date" value="<?php echo $_POST["date"]; ?>"><br /><br />
 		<label> Citation : </label><br />
 		<textarea rows="3" cols="30" name="citation" ><?php echo $citationCorrigee; ?></textarea><br /><br />
 
