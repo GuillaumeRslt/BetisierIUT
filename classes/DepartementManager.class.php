@@ -7,6 +7,7 @@ private $db;
     $this->db = $db;
   }
 
+//Récupération de tous les département de la base de données
   public function getList() {
     $listeDep = array();
 

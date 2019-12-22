@@ -7,6 +7,7 @@ private $db;
     $this->db = $db;
   }
 
+  //Récupération des citations validées
   public function getList() {
     $listeCitation = array();
 
@@ -29,6 +30,7 @@ private $db;
 
   }
 
+//Récupération de toutes les citations valides ou non
   public function getAllList() {
     $listeCitation = array();
 
@@ -50,6 +52,7 @@ private $db;
 
   }
 
+//Nombre des citations valides
   public function getNbCitation() {
     $sql = 'SELECT count(*) AS nbCitation
     FROM citation c
@@ -63,6 +66,7 @@ private $db;
     return $nbCitation["nbCitation"];
   }
 
+//Nombre de toutes les citations valides ou non
   public function getNbAllCitation() {
     $sql = 'SELECT count(*) AS nbCitation
     FROM citation c';
@@ -75,6 +79,7 @@ private $db;
     return $nbCitation["nbCitation"];
   }
 
+//Ajout d'une citation dans la base de données
   public function ajoutCitation($enseignant, $num, $citation, $dateCit) {
 
     $dateDepo = $this->getDateJour();
@@ -96,6 +101,7 @@ private $db;
 
   }
 
+//Récupération de la date actuelle
   public function getDateJour() {
     $sql = 'SELECT DATE(NOW()) as dateJour';
 
@@ -107,14 +113,20 @@ private $db;
     return $dateJour["dateJour"];
   }
 
+//Est-ce que la citation est notée
   public function isNote($numEtu, $numCit) {
     $sql = 'SELECT count(*) as nbCitation
     FROM citation c
     JOIN vote v ON c.cit_num=v.cit_num
-    WHERE '.$numEtu.'=v.per_num AND '.$numCit.'=v.cit_num
+    WHERE v.per_num=:numEtu AND v.cit_num=:numCit
     AND cit_valide=1 AND cit_date_valide is not null';
 
-    $req = $this->db->query($sql);
+    $req = $this->db->prepare($sql);
+
+    $req->bindValue(':numEtu',$numEtu,PDO::PARAM_STR);
+    $req->bindValue(':numCit',$numCit,PDO::PARAM_STR);
+
+    $req->execute();
 
     $nbCitation = $req->fetch();
 
@@ -126,16 +138,24 @@ private $db;
     $req->closeCursor();
   }
 
+//Ajout d'une note dans la table vote
   public function noterCitation($numCit, $num, $note) {
 
     $sql = 'INSERT INTO vote (cit_num, per_num, vot_valeur)
-    VALUES(\''.$numCit.'\', \''.$num.'\', \''.$note.'\')';
+    VALUES(:numCit, :num, :note )';
 
-    $req = $this->db->query($sql);
+    $req = $this->db->prepare($sql);
+
+    $req->bindValue(':numCit',$numCit,PDO::PARAM_STR);
+    $req->bindValue(':num',$num,PDO::PARAM_STR);
+    $req->bindValue(':note',$note,PDO::PARAM_STR);
+
+    $req->execute();
 
     $req->closeCursor();
   }
 
+//Récupération de la plus vieille date d'une citation
   public function getPlusVieilleDate(){
 
     $sql = 'SELECT cit_date as plusVieilleDate FROM citation
@@ -149,20 +169,23 @@ private $db;
     $req->closeCursor();
   }
 
+//Récupère le résultat de la recherche en fonction que l'utilisateur est définis ou non un enseignant dans la recherche
   public function getListResultatRechercheCit($num, $dateDeb, $dateFin, $noteDeb, $noteFin){
   $listeCitation =array();
 
-  if ($num == 0) {
+  if ($num == 0) { //Si aucun enseignant n'a été défini
 
     $sql = 'SELECT c.cit_num, concat(per_nom, \' \', per_prenom) AS per_nompre, cit_libelle, cit_date, AVG(vot_valeur) AS note_moy
     FROM citation c
     JOIN personne p ON c.per_num=p.per_num
     LEFT JOIN vote v ON c.cit_num=v.cit_num
     WHERE cit_valide=1 AND cit_date_valide is not null
-    AND cit_date BETWEEN \''.$dateDeb.'\' AND \''.$dateFin.'\'
+    AND cit_date BETWEEN :dateDeb AND :dateFin
     GROUP BY per_nom, c.cit_num, cit_date
-    HAVING AVG(vot_valeur) BETWEEN '.$noteDeb.' AND '.$noteFin.'
+    HAVING AVG(vot_valeur) BETWEEN :noteDeb AND :noteFin
     ORDER BY cit_date desc';
+
+    $req= $this->db->prepare($sql);
 
   } else {
 
@@ -171,15 +194,24 @@ private $db;
     JOIN personne p ON c.per_num=p.per_num
     LEFT JOIN vote v ON c.cit_num=v.cit_num
     WHERE cit_valide=1 AND cit_date_valide is not null
-    AND p.per_num='.$num.'
-    AND cit_date BETWEEN \''.$dateDeb.'\' AND \''.$dateFin.'\'
+    AND p.per_num=:num
+    AND cit_date BETWEEN :dateDeb AND :dateFin
     GROUP BY per_nom, c.cit_num, cit_date
-    HAVING AVG(vot_valeur) BETWEEN '.$noteDeb.' AND '.$noteFin.'
+    HAVING AVG(vot_valeur) BETWEEN :noteDeb AND :noteFin
     ORDER BY cit_date desc';
+
+    $req= $this->db->prepare($sql);
+
+    $req->bindValue(':num', $num,PDO::PARAM_STR);
 
   }
 
-  $req= $this->db->query($sql);
+  $req->bindValue(':dateDeb', $dateDeb,PDO::PARAM_STR);
+  $req->bindValue(':dateFin', $dateFin,PDO::PARAM_STR);
+  $req->bindValue(':noteDeb', $noteDeb,PDO::PARAM_STR);
+  $req->bindValue(':noteFin', $noteFin,PDO::PARAM_STR);
+
+  $req->execute();
 
   while ($citation = $req->fetch(PDO::FETCH_OBJ)) {
     $listeCitation[] = new Citation($citation);
@@ -189,6 +221,7 @@ private $db;
   $req->closeCursor();
   }
 
+//Est-ce que le mot est interdit ou non (présent dans la table mot)
   public function isInterdit($mot)
   {
     $req = $this->db->prepare('SELECT COUNT(*) AS nb FROM (SELECT mot_interdit ,
@@ -212,12 +245,17 @@ private $db;
     $req->closeCursor();
   }
 
+//Est-ce qu'une citation est valide
   public function isValide($num) {
     $sql = 'SELECT COUNT(*) AS nbCitation
     FROM citation c
-    WHERE cit_valide=1 AND cit_date_valide is not null AND cit_num=\''.$num.'\'';
+    WHERE cit_valide=1 AND cit_date_valide is not null AND cit_num=:num';
 
-    $req = $this->db->query($sql);
+    $req = $this->db->prepare($sql);
+
+    $req->bindValue(':num', $num, PDO::PARAM_STR);
+
+    $req->execute();
 
     $nbCitation = $req->fetch();
 
@@ -229,28 +267,41 @@ private $db;
     $req->closeCursor();
   }
 
+//Valide une citation
   public function validerCit($citNum, $numValide) {
 
     $date = $this->getDateJour();
 
-    $sql = 'UPDATE citation SET cit_valide=1, per_num_valide='.$numValide.', cit_date_valide=\''.$date.'\' WHERE cit_num=\''.$citNum.'\'';
+    $req = $this->db->prepare('UPDATE citation
+      SET cit_valide=1, per_num_valide=:numValide, cit_date_valide=:dateJour
+      WHERE cit_num=:citNum');
 
-    $req = $this->db->query($sql);
+    $req->bindValue(':numValide', $numValide, PDO::PARAM_STR);
+    $req->bindValue(':dateJour', $date, PDO::PARAM_STR);
+    $req->bindValue(':citNum', $citNum, PDO::PARAM_STR);
+
+    $req->execute();
 
     $req->closeCursor();
   }
 
+//Supprime une citation ainsi que ses notes
   public function supprimerCit($num) {
+//Suppréssion de la citation
+  $req = $this->db->prepare('DELETE FROM citation WHERE cit_num=:num');
 
-  $sql = 'DELETE FROM citation WHERE cit_num='.$num;
+  $req->bindValue(':num', $num, PDO::PARAM_STR);
 
-  $req = $this->db->query($sql);
+  $req->execute();
 
   $req->closeCursor();
 
-  $sql = 'DELETE FROM vote WHERE cit_num='.$num;
+//Suppréssion de ses notes
+  $req = $this->db->prepare('DELETE FROM vote WHERE cit_num=:num');
 
-  $req = $this->db->query($sql);
+  $req->bindValue(':num', $num, PDO::PARAM_STR);
+
+  $req->execute();
 
   $req->closeCursor();
 

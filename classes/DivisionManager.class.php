@@ -7,6 +7,7 @@ private $db;
     $this->db = $db;
   }
 
+//Récupération de toutes les divisions de la base de données
   public function getList() {
     $listeDivision = array();
 

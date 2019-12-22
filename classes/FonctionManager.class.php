@@ -7,6 +7,7 @@ private $db;
     $this->db = $db;
   }
 
+//Récupération de toutes les foncions présentes dans la base de données
   public function getList() {
     $listeFonction = array();
 
