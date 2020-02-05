@@ -1,4 +1,4 @@
-# Projet dans le cadre de l'IUT du Limousin
+# Projet dans le cadre de l'IUT informatique du Limousin
 
 ### Réalisation d'une application WEB en PHP
 
